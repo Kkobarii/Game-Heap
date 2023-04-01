@@ -1,9 +1,8 @@
 #pragma once
 
 #include "Game.h"
-#include "DataManager.h"
 #include <vector>
-#include <memory>
+#include "DataManager.h"
 
 class GameLibrary {
 private:

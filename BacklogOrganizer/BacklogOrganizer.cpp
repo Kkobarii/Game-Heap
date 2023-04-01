@@ -1,8 +1,5 @@
 #include "BacklogOrganizer.h"
 
-using std::string;
-using std::cout;
-using std::endl;
 using json = nlohmann::json;
 
 BacklogOrganizer::BacklogOrganizer(std::string path, int refresh_rate)
@@ -33,7 +30,7 @@ std::string BacklogOrganizer::search_name(std::string name)
 
     for (auto& game : games)
     {
-        string game_name = game.first;
+        std::string game_name = game.first;
 
         std::transform(game_name.begin(), game_name.end(), game_name.begin(),
             [](unsigned char c){ return std::tolower(c); });
@@ -84,14 +81,15 @@ std::unique_ptr<Game> BacklogOrganizer::find_game(std::string name)
     }
 
     // TODO: maybe allow adding games that aren't on steam?
+    //  yeah probably not a good idea
 
-    string stream_response;
-    string hltb_response;
+    std::string stream_response;
+    std::string hltb_response;
 
     SteamAPI::get_game(stream_response, std::to_string(id));
     HowLongToBeatAPI::get_game(hltb_response, game_name);
 
-    std::unique_ptr<Game> game = std::make_unique<Game>(id, stream_response, hltb_response);
+    std::unique_ptr<Game> game = std::make_unique<Game>(APIParser::parse_to_game(id, stream_response, hltb_response));
 
     std::cout << std::endl;
 

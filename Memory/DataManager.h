@@ -5,10 +5,9 @@
 #include <vector>
 #include <memory>
 #include <fstream>
-#include <chrono>
-#include "GameLibrary.h"
 #include "SteamAPI.h"
-#include "json.hpp"
+#include "JSONParser.h"
+#include "Game.h"
 
 class DataManager
 {

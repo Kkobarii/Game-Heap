@@ -4,6 +4,7 @@
 #include <restc-cpp/restc-cpp.h>
 #include <restc-cpp/RequestBuilder.h>
 #include <unordered_map>
+#include <fstream>
 
 class SteamAPI
 {

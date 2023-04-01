@@ -6,7 +6,6 @@ void DataManager::save_games(std::unordered_map<std::string, int> games, std::st
 {
     std::ofstream file(path);
 
-    // TODO: add logic to check if file is recent
     //file <<  std::chrono::system_clock::now().time_since_epoch().count();
 
     json json(games);
@@ -18,6 +17,10 @@ void DataManager::save_games(std::unordered_map<std::string, int> games, std::st
 
 std::unordered_map<std::string, int> DataManager::load_games(std::string path)
 {
+    // TODO: add logic to check if file is recent
+    //  if so, load from file
+    //  if not, load from steam api and save to file
+
     std::ifstream file(path);
     json json;
     std::unordered_map<std::string, int> games;
@@ -68,7 +71,7 @@ void DataManager::save_library(std::vector<std::shared_ptr<Game>> games, std::st
         {
             first = false;
         }
-        file << game->to_json();
+        file << JSONParser::parse_from_game(*game);
     }
 
     file << "\n\t]\n}" << std::endl;
@@ -94,7 +97,7 @@ std::vector<std::shared_ptr<Game>> DataManager::load_library(std::string path)
         file >> json;
         for (auto& element : json["games"])
         {
-            Game g = Game(element.dump());
+            Game g = JSONParser::parse_to_game(element.dump());
             games.push_back(std::make_shared<Game>(g));
         }
     }

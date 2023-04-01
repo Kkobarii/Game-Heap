@@ -2,13 +2,11 @@
 
 #include <iostream>
 #include <vector>
-#include <memory>
-#include <GameLibrary.h>
 #include <unordered_map>
-#include "SteamAPI.h"
-#include "HowLongToBeatAPI.h"
-#include "DataManager.h"
 #include "json.hpp"
+#include "DataManager.h"
+#include "HowLongToBeatAPI.h"
+#include "APIParser.h"
 
 class BacklogOrganizer
 {

@@ -1,14 +1,18 @@
 #include <iostream>
-#include "restc-cpp/restc-cpp.h"
-#include "restc-cpp/RequestBuilder.h"
-#include "json.hpp"
-#include "SteamAPI.h"
 #include "BacklogOrganizer.h"
-#include "DataManager.h"
+#include "GameLibrary.h"
 
-using namespace std;
-using namespace restc_cpp;
+// TODO: implement a way for the user to set priorities for sorting games
+//  - figure out how the games will be sorted
+//  - save and load the sorting priorities
 
+// TODO (maybe): implement adding notes to games
+
+// TODO (maybe): add option to exclude adult games from search results
+//  - steam has so many of them
+
+// TODO: client interface
+//  - will do this last
 
 int main()
 {
@@ -23,6 +27,7 @@ int main()
     lib.add_game(org.find_game("Factorio"));
     lib.add_game(org.find_game("Car Parking 2"));
     lib.add_game(org.find_game("Cyberpunk 2077"));
+    lib.add_game(org.find_game("//TODO: today"));
     lib.add_game(org.find_game("Nonexistent Game"));
     lib.add_game(org.find_game("Terraria"));
     lib.remove_game(org.get_game_id(org.search_name("Factorio")));

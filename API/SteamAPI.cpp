@@ -3,8 +3,6 @@
 //
 
 #include "SteamAPI.h"
-#include <fstream>
-#include <unordered_map>
 
 using namespace restc_cpp;
 

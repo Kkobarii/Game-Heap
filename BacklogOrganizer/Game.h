@@ -36,9 +36,10 @@ private:
 
     bool archived = false;
 
+    void calculate_priority();
+
 public:
-    Game(std::string name, std::optional<SteamAttributes> steam_attributes, std::optional<HowLongToBeatAttributes> howlongtobeat_attributes);
-    Game(int id, std::string steam_string, std::string howlongtobeat_string);
+    Game(std::string name, std::optional<SteamAttributes> steam_attributes, std::optional<HowLongToBeatAttributes> howlongtobeat_attributes, std::optional<int> user_rating, bool archived);
     explicit Game(std::string game_string);
 
     std::string to_json();
@@ -46,9 +47,13 @@ public:
 
     void set_user_rating(int rating);
     int get_steam_id();
-    int get_priority();
 
-    void calculate_priority();
+    std::string get_name() { return name; }
+    std::optional<SteamAttributes> get_steam_attributes() { return steam_attributes; }
+    std::optional<HowLongToBeatAttributes> get_howlongtobeat_attributes() { return howlongtobeat_attributes; }
+    std::optional<int> get_user_rating() { return user_rating; }
+    int get_priority() { return priority; }
+    bool is_archived() { return archived; }
 
     void print_simple()
     {
