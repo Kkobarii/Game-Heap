@@ -1,5 +1,5 @@
 # Game Heap
-> Project for my C++ course
+Project for my C++ course
 
 ## Description
 ---
@@ -20,7 +20,7 @@ All the information is collected using APIs from Steam and HowLongToBeat. Games 
 // creates a backlog organizer
 BacklogOrganizer org = BacklogOrganizer("games.txt");
 
-// creates a game library and specifies a path to a document where the games will be loaded from 
+// creates a game library and specifies a path to a document where the games will be loaded from
 GameLibrary lib = GameLibrary("user_games.txt");
 
 // adds a game to a library
@@ -45,7 +45,7 @@ lib.print();
 // prints the library in a simplified way (priority: game name)
 lib.print_simple();
 
-// saves the current library to 
+// saves the current library to the specified file
 lib.save_games("modified_user_games.txt");
 
 ```
