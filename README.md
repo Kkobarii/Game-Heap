@@ -16,7 +16,6 @@ All the information is collected using APIs from Steam and HowLongToBeat. Games 
 ## API Usage
 ---
 ```cpp
-
 // creates a backlog organizer
 BacklogOrganizer org = BacklogOrganizer("games.txt");
 
