@@ -1,6 +1,7 @@
 #include "HowLongToBeatAPI.h"
 
 using namespace restc_cpp;
+using json = nlohmann::json;
 
 int HowLongToBeatAPI::get(std::string url, std::string data, std::string& response)
 {
@@ -34,7 +35,11 @@ int HowLongToBeatAPI::get(std::string url, std::string data, std::string& respon
 int HowLongToBeatAPI::get_game(std::string& response, std::string name)
 {
     std::string url = "https://howlongtobeat.com/api/search";
-    std::string data = R"({"searchTerms":[")" + name + R"("],"size":1})";
+    json json = {
+        {"searchTerms", {name}},
+        {"size", 1}
+    };
+    std::string data = json.dump();
 
     return get(url, data, response);
 }
