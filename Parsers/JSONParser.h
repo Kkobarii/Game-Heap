@@ -3,9 +3,8 @@
 #include <iostream>
 #include "Game.h"
 
-class JSONParser
-{
-public:
-    static Game parse_to_game(std::string json);
-    static std::string parse_from_game(Game game);
-};
+using json = nlohmann::json;
+
+Game parse_json_to_game(std::string game_string);
+
+std::string parse_game_to_json(Game game);

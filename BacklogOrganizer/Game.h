@@ -27,7 +27,7 @@ struct HowLongToBeatAttributes {
 class Game {
 private:
     std::string name;
-    int priority = 0;
+    std::optional<std::string> description;
 
     std::optional<SteamAttributes> steam_attributes;
     std::optional<HowLongToBeatAttributes> howlongtobeat_attributes;
@@ -36,28 +36,30 @@ private:
 
     bool archived = false;
 
-    void calculate_priority();
-
 public:
-    Game(std::string name, std::optional<SteamAttributes> steam_attributes, std::optional<HowLongToBeatAttributes> howlongtobeat_attributes, std::optional<int> user_rating, bool archived);
+    Game(std::string name,
+         std::optional<SteamAttributes> steam_attributes,
+         std::optional<HowLongToBeatAttributes> howlongtobeat_attributes,
+         std::optional<int> user_rating, bool archived, std::optional<std::string> description = std::nullopt);
     explicit Game(std::string game_string);
 
     std::string to_json();
     friend std::ostream& operator<<(std::ostream& ostr, const Game& game);
 
     void set_user_rating(int rating);
+    void set_description(std::string description) { this->description = description; }
+    void set_archived(bool archived) { this->archived = archived; }
     int get_steam_id();
 
     std::string get_name() { return name; }
     std::optional<SteamAttributes> get_steam_attributes() { return steam_attributes; }
     std::optional<HowLongToBeatAttributes> get_howlongtobeat_attributes() { return howlongtobeat_attributes; }
     std::optional<int> get_user_rating() { return user_rating; }
-    int get_priority() { return priority; }
+    std::optional<std::string> get_description() { return description; }
     bool is_archived() { return archived; }
 
     void print_simple()
     {
-        std::cout << static_cast<double>(priority)/100 << ": " << (static_cast<double>(priority)/100 < 10 ? " " : "");
         std::cout << "\t" << name << std::endl;
     }
 };
