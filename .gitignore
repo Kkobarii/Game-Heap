@@ -35,4 +35,7 @@
 .idea
 cmake-build-debug
 Libs/restc-cpp
-Target/
+Target/Backend
+Target/Game_Heap_Backend
+Target/modified_user_games.txt
+Target/games.txt
