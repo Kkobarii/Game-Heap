@@ -2,14 +2,16 @@
 
 using json = nlohmann::json;
 
-Game::Game(std::string name, std::optional<SteamAttributes> steam_attributes, std::optional<HowLongToBeatAttributes> howlongtobeat_attributes, std::optional<int> user_rating, bool archived) :
+Game::Game(std::string name, std::optional<SteamAttributes> steam_attributes,
+           std::optional<HowLongToBeatAttributes> howlongtobeat_attributes,
+           std::optional<int> user_rating, bool archived, std::optional<std::string> description) :
     name(name),
     steam_attributes(steam_attributes),
     howlongtobeat_attributes(howlongtobeat_attributes),
     user_rating(user_rating),
-    archived(archived)
+    archived(archived),
+    description(description)
 {
-    calculate_priority();
 }
 
 std::ostream& operator<<(std::ostream& ostr, const Game& game)
@@ -17,7 +19,6 @@ std::ostream& operator<<(std::ostream& ostr, const Game& game)
     ostr << "/------------------/" << std::endl;
 
     ostr << "Name: " << game.name << std::endl;
-    ostr << "Priority: " << static_cast<double>(game.priority)/100 << std::endl;
     ostr << "Steam" << std::endl;
     if (game.steam_attributes.has_value())
     {
@@ -52,6 +53,11 @@ std::ostream& operator<<(std::ostream& ostr, const Game& game)
         ostr << "User Rating: N/A" << std::endl;
     ostr << "Archived: " << game.archived << std::endl;
 
+    if (game.description.has_value())
+        ostr << "Description: " << game.description.value() << std::endl;
+    else
+        ostr << "Description: N/A" << std::endl;
+
     return ostr;
 }
 
@@ -62,8 +68,6 @@ void Game::set_user_rating(int rating)
     else if (rating > 100)
         user_rating = 100;
     user_rating = rating;
-
-    calculate_priority();
 }
 
 int Game::get_steam_id()
@@ -72,51 +76,4 @@ int Game::get_steam_id()
         return -1;
     else
         return steam_attributes->steam_appid;
-}
-
-void Game::calculate_priority()
-{
-    // TODO: make this more sophisticated
-    //  - any rating is better than no rating - penalty for no rating or just zero?
-    //  - add a weight to each rating - later
-
-    priority = 0;
-    int count = 0;
-    priority += user_rating.value_or(0);
-    count++;
-
-    if (steam_attributes == std::nullopt)
-    {
-        priority += 0;
-    }
-    else
-    {
-        priority += steam_attributes->rating.value_or(0);
-    }
-    count++;
-
-    if (howlongtobeat_attributes == std::nullopt)
-    {
-        priority += 0;
-    }
-    else
-    {
-        priority += howlongtobeat_attributes->rating.value_or(0);
-    }
-    count++;
-
-    if (count == 0)
-        count = 1;
-
-    priority *= 100;
-    priority /= count;
-
-    if (archived)
-        priority = 0;
-
-    if (priority > 10000)
-        priority = 10000;
-
-    if (priority < 0)
-        priority = 0;
 }
