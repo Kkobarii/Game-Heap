@@ -19,6 +19,11 @@ notes to the games and check which ones they played. Finished games are added to
 All the information is collected using APIs from Steam and HowLongToBeat. Games and user config can be locally saved and
 loaded from a JSON document.
 
+## Dependencies
+---
+- nlohmann/json: https://github.com/nlohmann/json (header only - included)
+- restc-cpp: https://github.com/jgaa/restc-cpp
+
 ## API Usage
 ---
 
