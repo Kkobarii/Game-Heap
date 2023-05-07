@@ -33,22 +33,14 @@ find_package(Boost REQUIRED COMPONENTS
 
 add_executable(Game_Heap_Backend
         main.cpp
-        API/SteamAPI.h
         API/SteamAPI.cpp
-        API/HowLongToBeatAPI.h
         API/HowLongToBeatAPI.cpp
-        BacklogOrganizer/Game.h
         BacklogOrganizer/Game.cpp
-        BacklogOrganizer/GameLibrary.h
         BacklogOrganizer/GameLibrary.cpp
-        BacklogOrganizer/BacklogOrganizer.h
-        BacklogOrganizer/BacklogOrganizer.cpp
-        Memory/DataManager.h
+        BacklogOrganizer/GameFinder.cpp
         Memory/DataManager.cpp
-        Parsers/APIParser.h
         Parsers/APIParser.cpp
-        Parsers/JSONParser.h
-        Parsers/JSONParser.cpp)
+        Parsers/JSONParser.cpp BacklogOrganizer/PriorityCalculator.cpp BacklogOrganizer/PriorityCalculator.h)
 
 target_link_libraries(Game_Heap_Backend
     ${RESTC_CPP_LIBRARIES}
