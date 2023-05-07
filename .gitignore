@@ -34,5 +34,5 @@
 # Other files
 .idea
 cmake-build-debug
-Libs/
+Libs/restc-cpp
 Target/
