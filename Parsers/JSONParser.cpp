@@ -1,17 +1,16 @@
 #include "JSONParser.h"
 using json = nlohmann::json;
 
-Game JSONParser::parse_to_game(std::string game_string)
+Game parse_json_to_game(std::string game_string)
 {
     json game_json = json::parse(game_string);
-
-//    std::cout << game_json.dump(4) << std::endl;
 
     std::string name;
     std::optional<SteamAttributes> steam_attributes;
     std::optional<HowLongToBeatAttributes> howlongtobeat_attributes;
     std::optional<int> user_rating;
     bool archived;
+    std::optional<std::string> description;
 
     name = game_json["name"];
     if (game_json["steam_attributes"].is_null())
@@ -54,15 +53,19 @@ Game JSONParser::parse_to_game(std::string game_string)
         user_rating = game_json["user_rating"];
     archived = game_json["archived"];
 
-    return Game{name, steam_attributes, howlongtobeat_attributes, user_rating, archived};
+    if (game_json["description"].is_null())
+        description = std::nullopt;
+    else
+        description = game_json["description"];
+
+    return Game{name, steam_attributes, howlongtobeat_attributes, user_rating, archived, description};
 }
 
-std::string JSONParser::parse_from_game(Game game)
+std::string parse_game_to_json(Game game)
 {
     nlohmann::ordered_json json_game;
 
     json_game["name"] = game.get_name();
-    json_game["priority"] = game.get_priority();
 
     std::optional<SteamAttributes> steam_attributes = game.get_steam_attributes();
     std::optional<HowLongToBeatAttributes> howlongtobeat_attributes = game.get_howlongtobeat_attributes();
@@ -94,12 +97,18 @@ std::string JSONParser::parse_from_game(Game game)
     else json_game["howlongtobeat_attributes"] = nullptr;
 
     std::optional<int> user_rating = game.get_user_rating();
-
     if (user_rating.has_value())
         json_game["user_rating"] = user_rating.value();
     else
         json_game["user_rating"] = nullptr;
+
     json_game["archived"] = game.is_archived();
+
+    std::optional<std::string> description = game.get_description();
+    if (description.has_value())
+        json_game["description"] = description.value();
+    else
+        json_game["description"] = nullptr;
 
     return json_game.dump(4);
 }

@@ -1,7 +1,6 @@
 #include "APIParser.h"
 
-Game APIParser::parse_to_game(int id, std::string steam_string, std::string howlongtobeat_string, std::optional<int> user_rating,
-                              bool archived)
+Game parse_api_json_to_game(int id, std::string steam_string, std::string howlongtobeat_string, std::optional<int> user_rating, bool archived)
 {
     nlohmann::ordered_json steam_json = nlohmann::ordered_json::parse(steam_string);
     nlohmann::ordered_json hltb_json = nlohmann::ordered_json::parse(howlongtobeat_string);
@@ -60,9 +59,4 @@ Game APIParser::parse_to_game(int id, std::string steam_string, std::string howl
     }
 
     return Game{name, steam_attributes, howlongtobeat_attributes, user_rating, archived};
-}
-
-std::string APIParser::parse_from_game(Game game)
-{
-    return std::string();
 }
