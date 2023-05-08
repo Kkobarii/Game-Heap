@@ -22,7 +22,8 @@ loaded from a JSON document.
 ## Dependencies
 ---
 - nlohmann/json: https://github.com/nlohmann/json (header only - included)
-- restc-cpp: https://github.com/jgaa/restc-cpp
+- CLIUtils/CLI11: https://github.com/CLIUtils/CLI11 (header only - included)
+- jgaa/restc-cpp: https://github.com/jgaa/restc-cpp
 
 ## API Usage
 ---
