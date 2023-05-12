@@ -43,7 +43,6 @@ add_executable(gameheap
         Parsers/APIParser.cpp
         Parsers/JSONParser.cpp
         BacklogOrganizer/PriorityCalculator.cpp
-        CLI/CLI.cpp
         Output/Logger.cpp
         Output/Printer.cpp
         )
