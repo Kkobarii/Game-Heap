@@ -1,48 +1,48 @@
 {
-	"games": [
-{
-    "description": "Where silksong?",
-    "archived": false,
-    "howlongtobeat_attributes": {
-        "completion_100": 221560,
-        "completion_main": 96067,
-        "completion_plus": 148137,
-        "howlongtobeat_appid": 26286,
-        "rating": 91
-    },
-    "name": "Hollow Knight",
-    "steam_attributes": {
-        "price": {
-            "amount": 1479,
-            "currency": "EUR",
-            "formatted": "14,79€"
+    "last_updated": 1683902743930078924,
+    "total_games": 2,
+    "games": [
+        {
+            "name": "Hollow Knight",
+            "steam_attributes": {
+                "steam_appid": 367520,
+                "price": {
+                    "amount": 1479,
+                    "currency": "EUR",
+                    "formatted": "14,79€"
+                },
+                "rating": 87
+            },
+            "howlongtobeat_attributes": {
+                "howlongtobeat_appid": 26286,
+                "completion_main": 96067,
+                "completion_plus": 148137,
+                "completion_100": 221560,
+                "rating": 91
+            },
+            "user_rating": null,
+            "description": "Where silksong?"
         },
-        "rating": 87,
-        "steam_appid": 367520
-    },
-    "user_rating": null
-},
-{
-    "description": null,
-    "archived": false,
-    "howlongtobeat_attributes": {
-        "completion_100": 19324,
-        "completion_main": 7223,
-        "completion_plus": 9186,
-        "howlongtobeat_appid": 4867,
-        "rating": 83
-    },
-    "name": "Journey",
-    "steam_attributes": {
-        "price": {
-            "amount": 1399,
-            "currency": "EUR",
-            "formatted": "13,99€"
-        },
-        "rating": null,
-        "steam_appid": 638230
-    },
-    "user_rating": null
-}
-	]
+        {
+            "name": "Journey",
+            "steam_attributes": {
+                "steam_appid": 638230,
+                "price": {
+                    "amount": 1399,
+                    "currency": "EUR",
+                    "formatted": "13,99€"
+                },
+                "rating": null
+            },
+            "howlongtobeat_attributes": {
+                "howlongtobeat_appid": 4867,
+                "completion_main": 7223,
+                "completion_plus": 9186,
+                "completion_100": 19324,
+                "rating": 83
+            },
+            "user_rating": 80,
+            "description": null
+        }
+    ]
 }
