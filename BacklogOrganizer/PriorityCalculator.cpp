@@ -39,9 +39,6 @@ int get_rating_priority(Game game)
     priority *= 100;
     priority /= count;
 
-    if (game.is_archived())
-        priority = 0;
-
     if (priority < 0)
         priority = 0;
 
@@ -66,9 +63,6 @@ double get_ratio_priority(Game game)
         return 0;
 
     double ratio = ((double)steam_attributes->price.amount / 100) / ((double)howlongtobeat_attributes->completion_main / 3600);
-
-    if (game.is_archived())
-        ratio = -1;
 
     return ratio;
 }

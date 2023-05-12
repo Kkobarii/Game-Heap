@@ -1,9 +1,8 @@
 #include "JSONParser.h"
-using json = nlohmann::json;
 
 Game parse_json_to_game(std::string game_string)
 {
-    json game_json = json::parse(game_string);
+    ordered_json game_json = ordered_json::parse(game_string);
 
     std::string name;
     std::optional<SteamAttributes> steam_attributes;
@@ -51,19 +50,18 @@ Game parse_json_to_game(std::string game_string)
         user_rating = std::nullopt;
     else
         user_rating = game_json["user_rating"];
-    archived = game_json["archived"];
 
     if (game_json["description"].is_null())
         description = std::nullopt;
     else
         description = game_json["description"];
 
-    return Game{name, steam_attributes, howlongtobeat_attributes, user_rating, archived, description};
+    return Game{name, steam_attributes, howlongtobeat_attributes, user_rating, description};
 }
 
-std::string parse_game_to_json(Game game)
+ordered_json parse_game_to_json(Game game)
 {
-    nlohmann::ordered_json json_game;
+    ordered_json json_game;
 
     json_game["name"] = game.get_name();
 
@@ -102,13 +100,11 @@ std::string parse_game_to_json(Game game)
     else
         json_game["user_rating"] = nullptr;
 
-    json_game["archived"] = game.is_archived();
-
     std::optional<std::string> description = game.get_description();
     if (description.has_value())
         json_game["description"] = description.value();
     else
         json_game["description"] = nullptr;
 
-    return json_game.dump(4);
+    return json_game;
 }

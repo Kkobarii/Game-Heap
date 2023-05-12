@@ -58,5 +58,5 @@ Game parse_api_json_to_game(int id, std::string steam_string, std::string howlon
         howlongtobeat_attributes->rating = hltb_json["data"][0]["review_score"];
     }
 
-    return Game{name, steam_attributes, howlongtobeat_attributes, user_rating, archived};
+    return Game{name, steam_attributes, howlongtobeat_attributes, user_rating};
 }
