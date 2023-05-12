@@ -1,5 +1,4 @@
 #include "GameLibrary.h"
-#include "Logger.h"
 
 void GameLibrary::load_games()
 {
@@ -27,6 +26,21 @@ GameLibrary::GameLibrary(std::string path) : path(path)
     load_games();
 }
 
+void GameLibrary::add_game(std::shared_ptr<Game> game)
+{
+    add_game(game, -1, "");
+}
+
+void GameLibrary::add_game(std::shared_ptr<Game> game, int rating)
+{
+    add_game(game,rating, "");
+}
+
+void GameLibrary::add_game(std::shared_ptr<Game> game, std::string note)
+{
+    add_game(game, -1, note);
+}
+
 void GameLibrary::add_game(std::shared_ptr<Game> game, int rating, std::string note)
 {
     if (game == nullptr)
@@ -35,10 +49,7 @@ void GameLibrary::add_game(std::shared_ptr<Game> game, int rating, std::string n
     Logger::log("Adding " + game->get_name(), 1);
 
     game->set_user_rating(rating);
-
-    if (note != "")
-        game->set_description(note);
-
+    game->set_description(note);
 
     for (auto g : games)
     {
