@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.25)
-project(Game_Heap_Backend)
+project(Game_Heap)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../Target)
@@ -16,6 +16,7 @@ include_directories(BacklogOrganizer)
 include_directories(Memory)
 include_directories(Libs)
 include_directories(Parsers)
+include_directories(Output)
 
 find_package(restc-cpp REQUIRED)
 find_package(ZLIB REQUIRED)
@@ -31,7 +32,7 @@ find_package(Boost REQUIRED COMPONENTS
     log
     )
 
-add_executable(Game_Heap_Backend
+add_executable(gameheap
         main.cpp
         API/SteamAPI.cpp
         API/HowLongToBeatAPI.cpp
@@ -40,16 +41,21 @@ add_executable(Game_Heap_Backend
         BacklogOrganizer/GameFinder.cpp
         Memory/DataManager.cpp
         Parsers/APIParser.cpp
-        Parsers/JSONParser.cpp BacklogOrganizer/PriorityCalculator.cpp BacklogOrganizer/PriorityCalculator.h)
+        Parsers/JSONParser.cpp
+        BacklogOrganizer/PriorityCalculator.cpp
+        CLI/CLI.cpp
+        Output/Logger.cpp
+        Output/Printer.cpp
+        )
 
-target_link_libraries(Game_Heap_Backend
+target_link_libraries(gameheap
     ${RESTC_CPP_LIBRARIES}
     ${Boost_LIBRARIES}
     ${ZLIB_LIBRARIES}
     ${OPENSSL_LIBRARIES}
     )
 
-target_include_directories(Game_Heap_Backend PUBLIC
+target_include_directories(gameheap PUBLIC
     $<BUILD_INTERFACE:${ZLIB_INCLUDE_DIR}>
     $<BUILD_INTERFACE:${ZLIB_INCLUDE_DIR}/build>
     $<BUILD_INTERFACE:${OPENSSL_INCLUDE_DIR}>

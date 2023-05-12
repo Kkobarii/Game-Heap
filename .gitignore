@@ -34,8 +34,9 @@
 # Other files
 .idea
 cmake-build-debug
-Libs/restc-cpp
-Target/Backend
-Target/Game_Heap_Backend
+cmake-build-release
+/Libs/restc-cpp/
+Target/gameheap
+Target/testing.txt
 Target/modified_user_games.txt
 Target/games.txt
