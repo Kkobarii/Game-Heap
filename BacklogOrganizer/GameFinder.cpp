@@ -80,7 +80,6 @@ std::unique_ptr<Game> GameFinder::find_game(std::string name)
 
     if (id == -1)
     {
-        std::cout << std::endl;
         return nullptr;
     }
 
