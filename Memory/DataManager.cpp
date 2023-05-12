@@ -4,6 +4,12 @@ using json = nlohmann::json;
 
 void DataManager::save_games(std::unordered_map<std::string, int> games, std::string path)
 {
+    if (path == "")
+    {
+        Logger::log("No path specified for saving library!", 1);
+        return;
+    }
+
     std::ofstream file(path);
 
     //file <<  std::chrono::system_clock::now().time_since_epoch().count();
@@ -21,7 +27,7 @@ void DataManager::save_games(std::unordered_map<std::string, int> games, std::st
 
 std::unordered_map<std::string, int> DataManager::load_games(std::string path, int refresh_rate)
 {
-    std::cout << "Loading games" << std::endl;
+    Logger::log("Loading games", 1);
 
     std::ifstream file(path);
     json json;
@@ -29,7 +35,8 @@ std::unordered_map<std::string, int> DataManager::load_games(std::string path, i
 
     if (!file.is_open() || !file.good())
     {
-        std::cout << " file not found, loading from steam api" << std::endl;
+        Logger::log("File not found, loading from steam api", 2);
+
         std::string response;
         SteamAPI::get_games(response);
         json = json::parse(response);
@@ -45,11 +52,12 @@ std::unordered_map<std::string, int> DataManager::load_games(std::string path, i
     {
         json = json::parse(file);
         auto time_since = (std::chrono::system_clock::now().time_since_epoch().count() - json["last_updated"].get<long long>()) * std::chrono::system_clock::period::num / std::chrono::system_clock::period::den;
-        std::cout << " time since last update: " << time_since << " seconds" << std::endl;
+
+        Logger::log("File found, time since last update: " + std::to_string(time_since) + " seconds", 2);
 
         if (time_since > refresh_rate)
         {
-            std::cout << " file too old, loading from steam api" << std::endl;
+            Logger::log("File too old, loading from steam api", 2);
             std::string response;
             SteamAPI::get_games(response);
             json = json::parse(response);
@@ -63,7 +71,7 @@ std::unordered_map<std::string, int> DataManager::load_games(std::string path, i
         }
         else
         {
-            std::cout << " file recent, loading from file" << std::endl;
+            Logger::log("File recent, loading from file", 2);
             games = json["games"].get<std::unordered_map<std::string, int>>();
         }
     }
@@ -75,37 +83,31 @@ std::unordered_map<std::string, int> DataManager::load_games(std::string path, i
 
 void DataManager::save_library(std::vector<std::shared_ptr<Game>> games, std::string path)
 {
-    std::cout << "Saving library" << std::endl;
+    Logger::log("Saving library", 1);
 
     std::ofstream file(path);
 
-    file << "{\n";
-    file << "\t\"last_updated\": " << std::chrono::system_clock::now().time_since_epoch().count() << ",\n";
-    file << "\t\"total_games\": " << games.size() << ",\n";
-    file << "\t\"games\": [\n";
+    nlohmann::ordered_json json;
+    json["last_updated"] = std::chrono::system_clock::now().time_since_epoch().count();
+    json["total_games"] = games.size();
 
-    bool first = true;
+    std::vector<nlohmann::ordered_json> games_json;
+
     for (auto game : games)
     {
-        if (!first)
-        {
-            file << "," << std::endl;
-        }
-        else
-        {
-            first = false;
-        }
-        file << parse_game_to_json(*game);
+        games_json.push_back(parse_game_to_json(*game));
     }
 
-    file << "\n\t]\n}" << std::endl;
+    json["games"] = games_json;
+
+    file << json.dump(4);
 
     file.close();
 }
 
 std::vector<std::shared_ptr<Game>> DataManager::load_library(std::string path)
 {
-    std::cout << "Loading library" << std::endl;
+    Logger::log("Loading library", 1);
 
     std::ifstream file(path);
     json json;
@@ -113,7 +115,7 @@ std::vector<std::shared_ptr<Game>> DataManager::load_library(std::string path)
 
     if (!file.is_open())
     {
-        std::cout << "Library not found" << std::endl;
+        Logger::log("File not found", 1);
         return games;
     }
     else

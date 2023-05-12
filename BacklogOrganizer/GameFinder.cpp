@@ -23,7 +23,7 @@ void GameFinder::save_games()
 
 std::string GameFinder::search_name(std::string name)
 {
-    std::cout << "Searching for " << name << "... ";
+    std::string message = "Searching for " + name;
 
     std::transform(name.begin(), name.end(), name.begin(),
         [](unsigned char c){ return std::tolower(c); });
@@ -40,12 +40,14 @@ std::string GameFinder::search_name(std::string name)
 
         if (game_name == name)
         {
-            std::cout << "Found!" << std::endl;
+            message += " Found!";
+            Logger::log(message, 1);
             return game.first;
         }
     }
 
-    std::cout << "Not found :(" << std::endl;
+    message += " Not found!";
+    Logger::log(message, 1);
     return "";
 }
 
@@ -89,8 +91,6 @@ std::unique_ptr<Game> GameFinder::find_game(std::string name)
     HowLongToBeatAPI::get_game(hltb_response, game_name);
 
     std::unique_ptr<Game> game = std::make_unique<Game>(parse_api_json_to_game(id, stream_response, hltb_response));
-
-    std::cout << std::endl;
 
     return game;
 }

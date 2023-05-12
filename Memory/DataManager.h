@@ -8,6 +8,7 @@
 #include "SteamAPI.h"
 #include "JSONParser.h"
 #include "Game.h"
+#include "Logger.h"
 
 class DataManager
 {

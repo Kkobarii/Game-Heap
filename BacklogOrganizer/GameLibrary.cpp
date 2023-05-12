@@ -1,4 +1,5 @@
 #include "GameLibrary.h"
+#include "Logger.h"
 
 void GameLibrary::load_games()
 {
@@ -7,11 +8,6 @@ void GameLibrary::load_games()
 
 void GameLibrary::save_games()
 {
-    if (path == "")
-    {
-        std::cout << "No path specified for saving library!" << std::endl;
-        return;
-    }
     DataManager::save_library(games, path);
 }
 
@@ -31,20 +27,29 @@ GameLibrary::GameLibrary(std::string path) : path(path)
     load_games();
 }
 
-void GameLibrary::add_game(std::shared_ptr<Game> game)
-{
-    if (game == nullptr)
-        return;
-
-    games.push_back(game);
-}
-
-void GameLibrary::add_game(std::shared_ptr<Game> game, int rating)
+void GameLibrary::add_game(std::shared_ptr<Game> game, int rating, std::string note)
 {
     if (game == nullptr)
         return;
 
     game->set_user_rating(rating);
+
+    if (note != "")
+        game->set_description(note);
+
+
+    for (auto g : games)
+    {
+        if (g->get_steam_id() == game->get_steam_id())
+        {
+            Logger::log("ADD: Updating " + g->get_name(), 3);
+            games.erase(std::remove(games.begin(), games.end(), g), games.end());
+            games.push_back(game);
+            return;
+        }
+    }
+
+    Logger::log("ADD: Adding " + game->get_name(), 3);
     games.push_back(game);
 }
 
@@ -54,8 +59,8 @@ void GameLibrary::remove_game(int id)
     {
         if (g->get_steam_id() == id)
         {
+            Logger::log("REM: Removing " + g->get_name(), 3);
             games.erase(std::remove(games.begin(), games.end(), g), games.end());
-            break;
         }
     }
 }
@@ -71,9 +76,17 @@ void GameLibrary::update_game(std::shared_ptr<Game> game)
     }
 }
 
-std::vector<std::shared_ptr<Game>> GameLibrary::get_games()
+void GameLibrary::update_game(int id, int rating, std::string note)
 {
-    return std::vector<std::shared_ptr<Game>>();
+    for (auto g : games)
+    {
+        if (g->get_steam_id() == id)
+        {
+            Logger::log("UPD: Updating " + g->get_name() + " with rating " + std::to_string(rating) + " and note " + note, 3);
+            g->set_user_rating(rating);
+            g->set_description(note);
+        }
+    }
 }
 
 void GameLibrary::sort_games_by_rating()

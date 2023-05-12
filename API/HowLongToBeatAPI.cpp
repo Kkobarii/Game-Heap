@@ -1,21 +1,20 @@
 #include "HowLongToBeatAPI.h"
 
-using namespace restc_cpp;
 using json = nlohmann::json;
 
 int HowLongToBeatAPI::get(std::string url, std::string data, std::string& response)
 {
-    std::cout << "HowLongToBeatAPI::get() called with url: " << url;
-    std::cout << " and data: " << data << std::endl;
+    std::string message = "HowLongToBeatAPI::get() called with url: " + url + " and data: " + data;
+    Logger::log(message, 2);
 
     int responseCode = 0;
 
-    auto rest_client = RestClient::Create();
+    auto rest_client = restc_cpp::RestClient::Create();
     rest_client->Process
     ([=, &response, &responseCode]
-        (Context& ctx)
+        (restc_cpp::Context& ctx)
         {
-        RequestBuilder builder(ctx);
+        restc_cpp::RequestBuilder builder(ctx);
         builder.Post(url);
         builder.Header("User-Agent", "foobar/2000");
         builder.Header("content-type", "application/json");

@@ -5,6 +5,7 @@
 #include <restc-cpp/RequestBuilder.h>
 #include <unordered_map>
 #include "json.hpp"
+#include "Logger.h"
 
 class HowLongToBeatAPI
 {
