@@ -117,7 +117,13 @@ void sort(std::string user_games_file, CLI::Option* rating, CLI::Option* ratio)
 
 int main(int argc, char** argv)
 {
-    CLI::App app{"Game Library Organizer"};
+    std::string help_header = "\n  _____                 __ __            \n"
+                              " / ___/__ ___ _  ___   / // /__ ___ ____ \n"
+                              "/ (_ / _ `/  ' \\/ -_) / _  / -_) _ `/ _ \\\n"
+                              "\\___/\\_,_/_/_/_/\\__/ /_//_/\\__/\\_,_/ .__/\n"
+                              "                                  /_/    \n";
+
+    CLI::App app{help_header};
 
     auto demo = app.add_subcommand("demo", "Run the demo");
     demo->callback(api_demo);
