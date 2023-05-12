@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include "color.h"
 #define LOGGING_LEVEL 3
 
 struct Logger {

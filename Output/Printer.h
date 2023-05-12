@@ -1,5 +1,6 @@
 #include "GameLibrary.h"
 #include <iostream>
+#include "color.h"
 
 struct Printer {
     static void print(GameLibrary lib);

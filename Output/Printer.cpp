@@ -1,28 +1,27 @@
-//
-// Created by barca on 8.5.23.
-//
-
 #include "Printer.h"
 
 void Printer::print(GameLibrary lib)
 {
-    std::cout << std::endl;
+    Logger::log("Printing library", 1);
+
+    std::cout <<  std::endl;
 
     for (auto game : lib.get_games())
     {
         Printer::print(game);
         std::cout << std::endl;
     }
-    std::cout << std::endl;
 }
 
 void Printer::print_simple(GameLibrary lib)
 {
+    Logger::log("Printing library simplified", 1);
+
     std::cout << std::endl;
 
-    std::cout << std::left << std::setw(10) << "Rating";
+    std::cout << CYAN_B << BLACK << std::left << std::setw(10) << "Rating";
     std::cout << std::setw(14) << "Ratio";
-    std::cout << "Game" << std::endl;
+    std::cout << std::setw(14) << "Game" << RESET << std::endl;
 
     for (auto game : lib.get_games())
     {
@@ -33,7 +32,7 @@ void Printer::print_simple(GameLibrary lib)
 
 void Printer::print(std::shared_ptr<Game> game)
 {
-    std::cout << "### " << game->get_name() << " ###" << std::endl;
+    std::cout << CYAN << "### " << game->get_name() << " ###" << RESET << std::endl;
 
     auto steam_attributes = game->get_steam_attributes();
     std::cout << "Steam";
@@ -45,7 +44,7 @@ void Printer::print(std::shared_ptr<Game> game)
                   std::to_string(steam_attributes.value().rating.value()) : "no rating") << std::endl;
     }
     else
-        std::cout << ": no information";
+        std::cout << ": no information" << std::endl;
 
     auto hltb_attributes = game->get_howlongtobeat_attributes();
     std::cout << "HowLongToBeat";
@@ -57,7 +56,7 @@ void Printer::print(std::shared_ptr<Game> game)
                   std::to_string(hltb_attributes.value().rating.value()) : "no rating") << std::endl;
     }
     else
-        std::cout << ": no information";
+        std::cout << ": no information" << std::endl;
 
     std::cout << "User data: " << std::endl;
     std::cout << "  Rating: " << (game->get_user_rating().has_value() ? std::to_string(game->get_user_rating().value()) : "null") << std::endl;

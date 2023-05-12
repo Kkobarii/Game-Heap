@@ -2,20 +2,30 @@
 #include "GameLibrary.h"
 #include "CLI11.hpp"
 #include "Printer.h"
+#include "color.h"
+
+void print_demo_message(std::string message)
+{
+    std::cout << std::endl << RED << "[DEMO]\t" << message << RESET << std::endl;
+}
 
 void api_demo()
 {
     // Backlog organizer
+    print_demo_message("Creating a backlog organizer");
     GameFinder fin = GameFinder("games.txt");
 
     // Game library
     // Create a library and specify the path to file where the games will be saved
+    print_demo_message("Creating a game library");
     GameLibrary lib = GameLibrary("user_games.txt");
 
     // Print the whole library
+    print_demo_message("Printing newly loaded library");
     Printer::print(lib);
 
     // Add some games to the library
+    print_demo_message("Adding some games to the library");
     lib.add_game(fin.find_game("Celeste"));
     lib.add_game(fin.find_game("Rocket League"));
     lib.add_game(fin.find_game("Factorio"));
@@ -26,20 +36,25 @@ void api_demo()
     lib.add_game(fin.find_game("Terraria"));
 
     // Remove a game from the library
+    print_demo_message("Removing a game from the library");
     lib.remove_game(fin.get_game_id(fin.search_name("Factorio")));
 
     // Print the whole library
+    print_demo_message("Printing the library after adding and removing games");
     Printer::print(lib);
 
     // Sort library by average rating
+    print_demo_message("Sorting the library by average rating");
     lib.sort_games_by_rating();
     Printer::print_simple(lib);
 
     // Sort library by money/hour ratio
+    print_demo_message("Sorting the library by money/hour ratio");
     lib.sort_games_by_ratio();
     Printer::print_simple(lib);
 
     // Save the library to a file
+    print_demo_message("Saving the library to a file");
     lib.save_games("modified_user_games.txt");
 }
 
