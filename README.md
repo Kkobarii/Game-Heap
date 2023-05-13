@@ -14,6 +14,10 @@ The system shows basic information on each game: name, time to beat, reviews and
 
 All the information is collected using APIs from Steam and HowLongToBeat. The huge list of steam games is automatically saved and refreshed from API if it's too old. User libraries can also be locally saved and loaded from a JSON document.
 
+## Build
+
+- Adámku?
+
 ## Dependencies
 
 - nlohmann/json: https://github.com/nlohmann/json (header only - included)
