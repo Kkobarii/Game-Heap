@@ -136,7 +136,7 @@ int main(int argc, char** argv)
     int user_rating = -1;
 
     auto sub_create = app.add_subcommand("create", "Create a new library");
-    sub_create->add_option("path", user_games_file, "Path to file with user games")->check(CLI::ExistingFile)->required();
+    sub_create->add_option("path", user_games_file, "Path to file with user games")->required();
     sub_create->callback([&user_games_file]() { create_library(user_games_file); });
 
     auto sub_add = app.add_subcommand("add", "Add a game to the library");
