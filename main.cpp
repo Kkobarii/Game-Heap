@@ -59,6 +59,10 @@ void api_demo()
 
 void create_library(std::string user_games_file)
 {
+    std::ofstream file(user_games_file);
+    file << "{}";
+    file.close();
+
     GameLibrary lib = GameLibrary(user_games_file);
 
     lib.save_games(user_games_file);
