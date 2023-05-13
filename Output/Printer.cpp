@@ -19,9 +19,17 @@ void Printer::print_simple(GameLibrary lib)
 
     std::cout << std::endl;
 
-    std::cout << " " << CYAN_B << BLACK << std::left << std::setw(10) << "Rating";
-    std::cout << std::setw(14) << "Ratio";
-    std::cout << std::setw(14) << "Game" << RESET << std::endl;
+    size_t longest_name = 5;
+
+    for (auto game : lib.get_games())
+        if (game->get_name().length() > longest_name)
+            longest_name = game->get_name().length();
+
+    std::cout << " " << CYAN_B << BLACK << std::left;
+    std::cout << std::setw(10) << "Rating";
+    std::cout << std::setw(15) << "Ratio";
+    std::cout << std::setw(longest_name) << "Name";
+    std::cout << RESET << std::endl;
 
     for (auto game : lib.get_games())
     {
@@ -66,7 +74,29 @@ void Printer::print(std::shared_ptr<Game> game)
 
 void Printer::print_simple(std::shared_ptr<Game> game)
 {
-    std::cout << std::left << std::setw(10) << (double)get_rating_priority(*game)/100;
-    std::cout << std::setw(14) << get_ratio_priority(*game);
+    std::stringstream rating;
+    rating << (double)get_rating_priority(*game)/100;
+    rating << "%";
+
+    std::stringstream ratio;
+    std::string currency;
+    double priority = get_ratio_priority(*game);
+
+    if (priority < 0)
+        ratio << "-";
+    else if (priority == 0)
+        ratio << "FREE";
+    else
+    {
+        ratio << std::fixed << std::setprecision(2) << priority;
+        currency = game->get_steam_attributes().value_or(SteamAttributes()).price.currency;
+        if (currency == "")
+            currency = "?";
+        currency += "/h";
+        ratio << " " << currency;
+    }
+
+    std::cout << std::left << std::setw(10) << rating.str();
+    std::cout << std::setw(15) << ratio.str();
     std::cout << game->get_name() << std::endl;
 }
