@@ -16,7 +16,7 @@ All the information is collected using APIs from Steam and HowLongToBeat. The hu
 
 ## Build
 
-- Adámku?
+- Anarchy, it's every man for himself
 
 ## Dependencies
 
