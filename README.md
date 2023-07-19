@@ -1,6 +1,6 @@
 # Game Heap
 
-Project for my C++ course
+Project for my C++1 course
 
 ## Description
 
